@@ -1,5 +1,10 @@
 ﻿#include<iostream>
 using namespace std;
+using std::cin;
+using std::cout;
+using std::endl;
+
+#define delimiter "\n-------------------------------\n"
 
 class Point
 {
@@ -54,8 +59,16 @@ public:
 	{
 		cout << "Destructor:\t\t" << this << endl;
 	}
+	// Operators:
+	Point& operator=(const Point& other)
+	{
+		this->x = other.x;
+		this->y = other.y;
+		cout << "CopyAssignment:\t\t" << this << endl;
+		return *this;
+	}
 	//Methods
-	double distance(Point other)
+	double distance(const Point& other)const
 		//this - эта точка
 		//other - та точка
 	{
@@ -66,11 +79,11 @@ public:
 	}
 	void print()const
 	{
-		cout << "x= " << x << "\tY= " << y << endl;
+		cout <<this<< ":x= " << x << "\tY= " << y << endl;
 	}
 };
 
-double distance(Point A, Point B)
+double distance(const Point& A,const Point& B)
 {
 	double x_distance = A.get_x() - B.get_x();
 	double y_distance = A.get_y() - B.get_y();
@@ -78,8 +91,9 @@ double distance(Point A, Point B)
 }
 
 //#define STRUCT_POINT
-#define DISTANCE_CHECK
+//#define DISTANCE_CHECK
 //#define CONSTRUCTOR_CHECK
+#define ASSIGNMENT_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -109,11 +123,15 @@ void main()
 	B.set_x(7);
 	B.set_y(8);
 	cout << B.get_x() << "\t" << B.get_y() << endl;
-
+	cout << delimiter << endl;
 	cout << "Растояние от точки 'А' до точки 'В': " << A.distance(B) << endl;
+	cout << delimiter << endl;
 	cout << "Растояние от точки 'B' до точки 'A': " << B.distance(A) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние между точками 'A' и 'B': " << distance(A, B) << endl;
+	cout << delimiter << endl;
 	cout << "Расстояние между точками 'B' и 'A': " << distance(B, A) << endl;
+	cout << delimiter << endl;
 
 #endif // DISTANCE_CHECK
 #ifdef CONSTRUCTOR_CHECK
@@ -129,5 +147,23 @@ void main()
 	Point D = C;
 	D.print();
 #endif // CONSTRUCTOR_CHECK
+
+#ifdef ASSIGNMENT_CHECK
+	//Point A(2, 3);	//Constructor
+//Point B;		//Default constructor
+//B = A;			//Copy assignment
+//B.print();
+
+	int a, b, c;
+	a = b = c = 0;
+	cout << a << "\t" << b << "\t" << c << endl;
+
+	Point A, B, C;
+	A = B = C = Point(2, 3);
+	A.print();
+	B.print();
+	C.print();
+#endif // ASSIGNMENT_CHECK
+
 
 }
