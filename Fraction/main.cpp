@@ -86,6 +86,26 @@ public:
 		cout << "CopyAssignment;\t\t" << this << endl;
 		return *this;
 	}
+	// Method:
+	Fraction& to_proper()
+	{
+		integer += numerator / denominator;
+		numerator %= denominator;
+		return *this;
+	}
+	Fraction inverted()const
+	{
+		Fraction inverted = *this;
+		inverted.to_improper();
+		swap(inverted.numerator, inverted.denominator);
+		return inverted;
+	}
+
+	void to_improper()
+	{
+		numerator += integer * denominator;
+		integer = 0;
+	}
 	void print()const
 	{
 		if (integer)cout << integer;
@@ -100,9 +120,26 @@ public:
 	}
 };
 
+Fraction operator*(Fraction left, Fraction right)
+{
+	left.to_improper();
+	right.to_improper();
+	return Fraction
+	(
+		left.get_numerator() * right.get_numerator(),
+		left.get_denominator() * right.get_denominator()
+	). to_proper();
+}
+Fraction operator/(const Fraction& left, const Fraction& right)
+{
+	return left * right.inverted();
+}
+
+//#define CONSTRUTOR_CHECK
 void main()
 {
 	setlocale(LC_ALL, "");
+#ifdef CONSTRUCTOR_CHECK
 	Fraction A; //Default constructor
 	A.print();
 
@@ -121,4 +158,16 @@ void main()
 	Fraction F;
 	F = E;
 	F.print();
+#endif // CONSTRUCTOR_CHECK
+
+	Fraction A(2, 3, 4);
+	A.print();
+
+	Fraction B(3, 4, 5);
+	B.print();
+
+	Fraction C = A / B;
+	C.print();
+
+
 }
