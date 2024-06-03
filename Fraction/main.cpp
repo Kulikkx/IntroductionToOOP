@@ -1,4 +1,4 @@
-#include<iostream>
+п»ї#include<iostream>
 using namespace std;
 
 class Fraction;
@@ -127,7 +127,7 @@ public:
 			less = rest;
 
 		} while (rest);
-		int GCD = more; //GCD - Наибольший общий делитель;
+		int GCD = more; //GCD - РќР°РёР±РѕР»СЊС€РёР№ РѕР±С‰РёР№ РґРµР»РёС‚РµР»СЊ;
 		numerator /= GCD;
 		denominator /= GCD;
 		return *this;
