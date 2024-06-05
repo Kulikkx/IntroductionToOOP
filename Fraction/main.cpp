@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 using namespace std;
 
 class Fraction;
@@ -229,10 +230,44 @@ std::ostream& operator<<(std::ostream& os, const Fraction& obj)
 	else if (obj.get_integer() == 0)os << 0;
 	return os;
 }
+//Stream - поток
+//std-Standart namespace
+// ;: - Scope operator (Оператор разрешения видимости - позволяет зайти в пространство имен
+//namespace Простарнство имен как папка,а имя,расположенное в нем
+//Сам по себе "::" выводит нас в GlobalScope (Глобальное пространсво имен)
 
+std::istream& operator>>(std::istream& is, Fraction& obj)
+//ostream - output stream(поток вывода)
+//cout - Console Out
+{
+	const int SIZE = 32;
+	char buffer [SIZE] {};
+	//is >> buffer;
+	is.getline(buffer, SIZE);
+	int number[3];
+	int n = 0;
+	const char delimiters[] = "(/) +";
+	for (char* pch = strtok(buffer, delimiters); pch; pch = strtok(NULL, delimiters))
+		// Функция strtok() разделяет строку на токены
+		// Функция strtok() изменяет исходную строку 
+		number[n++] = atoi(pch);
+	//pch- указатель на символ
+//https://cplusplus.com/reference/cstdlib/atoi/?kw=atoi
+	//Функция atoi() принимает строку,  и возвращает значение типа int найденное в этой строке
+	for (int i = 0; i < n; i++)cout << number[i] << "\t"; cout << endl;
+	switch (n)
+	{
+	case 1: obj = Fraction(number[0]); break;
+	case 2: obj = Fraction(number[0], number[1]); break;
+	case 3: obj = Fraction(number[0], number[1], number[2]); break;
+	}
+	return is;
+}
 
 //#define ARIHMETICAL_OPERATORS_CHECK
-#define COMPARISON_OPERATORS_CHECK
+//#define COMPARISON_OPERATORS_CHECK
+#define STREAMS_CHECK
+
 
 void main()
 {
@@ -289,6 +324,15 @@ void main()
 	cout << (Fraction(1, 2) >= Fraction(5, 10)) << endl;
 #endif // COMPARISON_OPERATORS_CHECK
 
-	Fraction A (2, 3, 4);
-	cout << A << endl;;
+#ifdef STREAMS_CHECK
+
+
+	Fraction A(2, 3, 4);
+	cout << "Введите простую дробь:"; cin >> A;
+
+	cout << A << endl;
+
+#endif // STREAMS_CHECK
+
+
 }
