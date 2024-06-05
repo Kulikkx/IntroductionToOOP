@@ -326,10 +326,8 @@ void main()
 
 #ifdef STREAMS_CHECK
 
-
 	Fraction A(2, 3, 4);
 	cout << "Введите простую дробь:"; cin >> A;
-
 	cout << A << endl;
 
 #endif // STREAMS_CHECK
