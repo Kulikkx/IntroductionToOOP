@@ -2,6 +2,9 @@
 #include<iostream>
 using namespace std;
 
+#define delimiter "\n-------------------------\n"
+#define double_delimiter "\n-------------------------\n"
+
 class Fraction;
 Fraction operator*(Fraction left, Fraction right);
 Fraction operator/(const Fraction& left, const Fraction& right);
@@ -45,11 +48,12 @@ public:
 		denominator = 1;
 		cout <<"DefaultConstructor:\t" << this << endl;
 	}
-	Fraction(int integer)
+
+	explicit Fraction(int integer)
 	{
 		this->integer = integer;
 		this->numerator = 0;
-		this->denominator=1;
+		this->denominator = 1;
 		cout << "1ArgConstructor\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
@@ -114,6 +118,12 @@ public:
 		return old;
 	}
 
+	//Type-casr operators:
+
+	explicit operator int()
+	{
+		return integer;
+	}
 	// Method:
 
 	Fraction& reduce()
@@ -266,8 +276,11 @@ std::istream& operator>>(std::istream& is, Fraction& obj)
 
 //#define ARIHMETICAL_OPERATORS_CHECK
 //#define COMPARISON_OPERATORS_CHECK
-#define STREAMS_CHECK
-
+//#define STREAMS_CHECK
+//#define TYPE_CONVERSION_BASICS
+//#define CONVERSIONS_FROM_OTHER_TO_CLASS
+//#define CONVERSIONS_TASK_1
+#define CONVERSIONS_TASK_2
 
 void main()
 {
@@ -331,6 +344,55 @@ void main()
 	cout << A << endl;
 
 #endif // STREAMS_CHECK
+
+#ifdef  TYPE_CONVERSION_BASICS
+	double b = 3;
+	int c = b;   //Converce from more to less without data loss
+	int d = 2.5; // Conversion from more to loss with data loss  
+	cout << sizeof(int) << endl; //4 байта
+	cout << sizeof(double) << endl;//8 байтов
+#endif //  TYPE_CONVERSION_BASICS
+
+#ifdef CONVERSIONS_FROM_OTHER_TO_CLASS
+	//Fraction A = (Fraction)5;
+//cout << A << endl;
+//cout << delimiter << endl;
+//cout << double_delimiter << endl;
+
+	Fraction B; //Default constructor
+	cout << delimiter << endl;
+	B = Fraction(8);		//CopyAssignment
+	cout << delimiter << endl;
+	cout << B << endl;
+
+	cout << double_delimiter << endl;
+	/*
+	* --------------------------
+	operator type()
+	{
+	......;
+	......;
+	return;
+	}
+	------------------------------
+	*/
+#endif // CONVERSIONS_FROM_OTHER_TO_CLASS
+
+#ifdef CONVERSIONS_TASK_1
+	Fraction A(2, 3, 4);
+	cout << A << endl;
+
+	//int a = (int)A;
+	double a = (double)A;
+	cout << a << endl;
+#endif // CONVERSIONS_TASK_1
+
+#ifdef CONVERSIONS_TASK_2
+
+	Fraction B = (Fraction)2.75;
+	cout << B << endl;
+
+#endif // CONVERSIONS_TASK_2
 
 
 }
