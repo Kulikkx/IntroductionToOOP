@@ -1,4 +1,5 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+﻿#define _USE_MATH_DEFINES
+#define _CRT_SECURE_NO_WARNINGS
 #include<iostream>
 using namespace std;
 
@@ -55,6 +56,16 @@ public:
 		this->numerator = 0;
 		this->denominator = 1;
 		cout << "1ArgConstructor\t" << this << endl;
+	}
+	Fraction(double decimal)
+	{
+		decimal += 1e-10;
+		integer = decimal;
+		decimal -= integer;
+		denominator = 1e+9;
+		numerator = decimal * denominator;
+		reduce();
+		cout << "Constructor:\t" << this << endl;
 	}
 	Fraction(int numerator, int denominator)
 	{
@@ -124,6 +135,11 @@ public:
 	{
 		return integer;
 	}
+	operator double()
+	{
+		return integer + (double)numerator / denominator;
+	}
+
 	// Method:
 
 	Fraction& reduce()
@@ -389,7 +405,7 @@ void main()
 
 #ifdef CONVERSIONS_TASK_2
 
-	Fraction B = (Fraction)2.75;
+	Fraction B = 10.99;
 	cout << B << endl;
 
 #endif // CONVERSIONS_TASK_2
