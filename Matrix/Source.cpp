@@ -1,4 +1,4 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 using std::cout;
@@ -8,12 +8,9 @@ using std::endl;
 #define delimeter "\n-------------------------------\n"
 
 class Matrix;
-
 Matrix operator + (Matrix& left, Matrix& right);
 Matrix operator - (Matrix& left, Matrix& right);
 Matrix operator * (Matrix& left, Matrix& right);
-std::ostream& operator <<(std::ostream& os, const Matrix& obj);
-std::istream& operator >>(std::istream& is, const Matrix& obj);
 
 class Matrix
 {
@@ -32,10 +29,6 @@ public:
 	int get_arrij(int i, int j)
 	{
 		return arr[i][j];
-	}
-	int** get_arr()const
-	{
-		return arr;
 	}
 	void set_rows(int rows)
 	{
@@ -68,28 +61,20 @@ public:
 		arr = nullptr;
 		cout << "DefaultConstructor\t" << this << endl;
 	}
-	Matrix(int rows, int cols) : rows(rows), cols(cols), arr(new int* [rows] {})
+	Matrix(int rows, int cols)
 	{
-		/*this->rows = rows;
+		this->rows = rows;
 		this->cols = cols;
-		this->arr = new int* [rows] {};*/
+		this->arr = new int* [rows] {};
 		for (int i = 0; i < rows; i++)
 		{
 			arr[i] = new int[cols] {};
 		}
 		cout << "BinaryConstructor:\t" << this << endl;
 	}
-	Matrix(const Matrix& other) : Matrix(other.rows, other.cols)
+	Matrix(const Matrix& other)
 	{
-		for (int i = 0; i < rows; i++)
-		{
-			for (int j = 0; j < cols; j++)
-			{
-				arr[i][j] = other.arr[i][j];
-			}
-			cout << "CopyConstructor:\t" << this << endl;
-		}
-		/*this->rows = other.rows;
+		this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
 		for (int i = 0; i < rows; i++)
@@ -99,14 +84,18 @@ public:
 			{
 				this->arr[i][j] = other.arr[i][j];
 			}
-			cout << "CopyConstructor:\t" << this << endl;
-		}*/
+		}
+		cout << "CopyConstructor:\t" << this << endl;
 	}
 	Matrix& operator = (const Matrix& other)
 	{
 		if (this == &other)return *this;
 		for (int i = 0; i < rows; i++)
 			this->~Matrix();
+		/*{
+			delete arr[i];
+		}
+		delete[] arr;*/
 		this->rows = other.rows;
 		this->cols = other.cols;
 		this->arr = new int* [rows];
@@ -160,12 +149,8 @@ void main()
 	A.FillRand();
 	A.print();
 	cout << delimeter << endl;
-	//cout << A.get_arrij(2, 3) << endl;
-	/*cout << A << endl;
-	cin >> A;
-	cout << A << endl;
-	cout << endl;*/
-	//cout << delimeter << endl;
+	cout << A.get_arrij(2, 3) << endl;
+	cout << delimeter << endl;
 	Matrix B(A);
 	B.print();
 	cout << delimeter << endl;
@@ -173,7 +158,7 @@ void main()
 	C = B;
 	C.print();
 	cout << delimeter << endl;
-	/*Matrix D;
+	Matrix D;
 	D = A + B;
 	D.print();
 	cout << delimeter << endl;
@@ -184,7 +169,8 @@ void main()
 	Matrix F;
 	F = A * B;
 	F.print();
-	cout << delimeter << endl;*/
+	cout << delimeter << endl;
+
 }
 
 Matrix operator + (Matrix& left, Matrix& right)
@@ -244,27 +230,14 @@ Matrix operator * (Matrix& left, Matrix& right)
 	}
 	return buffer;
 }
-std::ostream& operator <<(std::ostream& os, const Matrix& obj)
-{
-	for (int i = 0; i < obj.get_rows(); i++)
-	{
-		for (int j = 0; j < obj.get_cols(); j++)
-		{
-			cout << obj.get_arr()[i][j] << "\t";
-		}
-		cout << endl;
-	}
-	return os;
-}
-std::istream& operator >>(std::istream& is, const Matrix& obj)
-{
-	for (int i = 0; i < obj.get_rows(); i++)
-	{
-		for (int j = 0; j < obj.get_cols(); j++)
-		{
-			is >> obj.get_arr()[i][j];
-		}
-		cout << endl;
-	}
-	return is;
-}
+//std::ostream& operator <<(std::ostream& os, Matrix& obj)
+//{
+//	for (int i = 0; i < obj.get_rows(); i++)
+//	{
+//		for (int j = 0; j < obj.get_cols(); j++)
+//		{
+//			os << obj.set_arrij(i,j,value);
+//		}
+//	}
+//	return os;
+//}
